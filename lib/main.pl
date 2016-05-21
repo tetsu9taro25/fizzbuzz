@@ -4,11 +4,10 @@ use utf8;
 use ExitProgram;
 use FizzBuzz;
 use History;
-use FileOutput;
-use FileInput;
+use FileOperation;
 
-my @history_data;
 my $mode;
+my $history = History->new;
 
 while(1) {
 
@@ -22,27 +21,33 @@ while(1) {
 
   if ($mode == 1) {
     print "Enter the number for FizzBuzz game.\n";
-    my $fb_input = <STDIN>;
-    chomp($fb_input);
-    my $fb_result = FizzBuzz->result($fb_input) . "\n";
-    @history_data = History->save($fb_input, $fb_result, @history_data);
-    print $fb_result;
+    chomp( my $fb_input = <STDIN>);
+    my $fb_instance = FizzBuzz->new($fb_input);
+    $fb_instance->result($history);
+    $fb_instance->show;
   }
 
   if ($mode == 2) {
     print "History of this term.\n--------\n";
-    print @history_data;
+    &print_array($history->get);
     print "--------\n";
   }
 
   if ($mode == 3) {
-    FileOutput->file_output(@history_data);
+    FileOperation->file_output($history);
     print "FizzBuzzHistory.txt is saved.\n";
   }
 
   if ($mode == 4) {
     print "History from FizzBuzzHistory.txt.\n--------\n";
-    print FileInput->file_input;
+    &print_array(FileOperation->file_input);
     print "--------\n";
   }
+}
+
+sub print_array {
+  my @array = @_;
+  for(@array){
+    print $_ . "\n";
+  };
 }
