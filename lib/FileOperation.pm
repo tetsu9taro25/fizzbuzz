@@ -13,7 +13,7 @@ use History;
 #}
 
 sub file_output {
-  my ($class, $histories_instance) = @_;
+  my ($self, $histories_instance) = @_;
 
   open(DATAFILE, ">", "FizzBuzzHistory.txt") or die("Error:$!");
 
@@ -24,7 +24,7 @@ sub file_output {
 }
 
 sub file_input {
-  my ($class) = @_;
+  my ($self) = @_;
 
   open(IN, "<", "FizzBuzzHistory.txt") or die("Error:$!");
   my @file_data;
@@ -36,5 +36,10 @@ sub file_input {
 
   return @file_data;
 }
+
+#sub file_operate {
+#  my ($self, $IO) = @_;
+#  open(my $FH, $IO, $self->{filename}) or die("Error:$!");
+#}
 
 1;
